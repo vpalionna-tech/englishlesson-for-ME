@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Level Up: A2 to B2 Vocabulary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F4F2FB; --surface:#FFFFFF; --ink:#1D1B3A; --line:#1D1B3A; --muted:#58557A; --soft:#DCD8F0;
+  --acc:#6C3CE0; --onacc:#FFFFFF; --lime:#C6F432; --good:#D5F0E1; --bad:#FFDAD3; --focus:#0A5CFF;
+  --a2:#1F8A5B; --b1:#2457A6; --b2:#B4531A; --onb:#FFFFFF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#12102A; --surface:#1C1A3D; --ink:#F2F0FF; --line:#8B82D9; --muted:#BDB8E6; --soft:#2F2B5C; --acc:#9D7BFF; --onacc:#14102B; --good:#1E5A44; --bad:#6B2A25; --focus:#9CC1FF; --a2:#4CC38A; --b1:#7BA8F5; --b2:#F0A060; --onb:#0E0B24; }
+}
+:root[data-theme="dark"]{ --bg:#12102A; --surface:#1C1A3D; --ink:#F2F0FF; --line:#8B82D9; --muted:#BDB8E6; --soft:#2F2B5C; --acc:#9D7BFF; --onacc:#14102B; --good:#1E5A44; --bad:#6B2A25; --focus:#9CC1FF; --a2:#4CC38A; --b1:#7BA8F5; --b2:#F0A060; --onb:#0E0B24; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,Roboto,sans-serif;font-size:18px;line-height:1.5}
+button,select,input{font-family:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.ipa{font-family:'Noto Sans','Segoe UI','DejaVu Sans',system-ui,sans-serif}
+mark{background:var(--lime);color:#1D1B3A;border-radius:4px;padding:0 4px;font-weight:700}
+
+.top{max-width:900px;margin:0 auto;padding:14px 14px 4px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.top h1{margin:0;font-size:clamp(24px,5.5vw,36px);font-weight:800;line-height:1.05}
+.top h1 em{font-style:normal;background:var(--lime);color:#1D1B3A;border-radius:8px;padding:0 8px}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:var(--ink);color:var(--bg);border-radius:999px;padding:2px 14px;font-weight:700;font-size:15px;white-space:nowrap}
+.wrap{max-width:900px;margin:0 auto;padding:10px 14px 40px}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:0 0 14px}
+.tab{cursor:pointer;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:6px 2px 5px;font-weight:700;font-size:13px;display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.tab .ic{font-size:22px}
+.tab[aria-selected="true"]{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+
+.card{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:18px 14px}
+h2{font-size:24px;margin:0 0 4px;font-weight:800}
+h3{font-size:17px;margin:16px 0 6px}
+.hint{color:var(--muted);font-size:15px;margin:0}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.btn{cursor:pointer;font-weight:700;font-size:17px;border:2px solid var(--line);border-radius:12px;padding:8px 18px;background:var(--surface);color:var(--ink)}
+.btn.main{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.btn.lime{background:var(--lime);color:#1D1B3A;border-color:#1D1B3A}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn:active{transform:translateY(2px)}
+
+.scope{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;padding:10px;border:2px dashed var(--line);border-radius:14px}
+.scope select{font-weight:600;font-size:15px;border:2px solid var(--line);border-radius:10px;padding:4px 8px;background:var(--surface);color:var(--ink);max-width:100%}
+.chip{cursor:pointer;font-weight:600;font-size:15px;border:2px solid var(--line);border-radius:999px;padding:2px 12px;background:var(--surface);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chip.today{background:var(--lime);color:#1D1B3A;border-color:#1D1B3A}
+.badge{display:inline-block;border-radius:999px;padding:0 10px;font-size:13px;font-weight:800;color:var(--onb);vertical-align:middle}
+.badge.A2{background:var(--a2)} .badge.B1{background:var(--b1)} .badge.B2{background:var(--b2)}
+.pos{display:inline-block;border:2px solid var(--line);border-radius:999px;padding:0 10px;font-size:13px;font-weight:700;vertical-align:middle}
+.bar{height:12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--acc)}
+
+.fc{text-align:center;padding:10px 4px}
+.fc .w{font-size:clamp(34px,8vw,52px);font-weight:800;line-height:1.1;margin:8px 0 2px}
+.fc .i{font-size:22px;color:var(--muted);margin:0 0 10px}
+.fc .uk{font-size:26px;font-weight:700;margin:10px 0 4px}
+.fc .ex{font-size:19px;margin:6px auto 0;max-width:560px}
+.fc .rev{min-height:110px}
+.q{font-size:clamp(22px,4.8vw,30px);font-weight:800;line-height:1.3;margin:8px 0 14px}
+.sent{font-size:clamp(20px,4.4vw,26px);font-weight:600;line-height:1.4;margin:8px 0 12px}
+.blank{display:inline-block;min-width:90px;border-bottom:4px solid var(--acc);text-align:center;padding:0 6px}
+.opts{display:grid;gap:10px}
+.opt{cursor:pointer;text-align:left;font-weight:700;font-size:19px;border:2px solid var(--line);border-radius:12px;padding:11px 14px;background:var(--surface);color:var(--ink)}
+.opt.good{background:var(--good)} .opt.bad{background:var(--bad)} .opt[disabled]{cursor:default}
+.fb{margin:12px 0 0;padding:10px 14px;border:2px solid var(--line);border-radius:12px;background:var(--good)}
+.fb.no{background:var(--bad)} .fb b{display:block}
+.inp{width:100%;font-size:26px;font-weight:700;border:3px solid var(--line);border-radius:14px;padding:10px 14px;background:var(--surface);color:var(--ink);margin:8px 0 10px;text-align:center}
+.inp.ok{background:var(--good)} .inp.no{background:var(--bad)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.th{border:2px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--surface)}
+.th b{display:block;font-size:16px}
+.th .bar{margin-top:6px;height:10px}
+.th small{color:var(--muted);font-size:13px}
+.big{font-size:44px;font-weight:800;line-height:1}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:8px 0 14px}
+.kpi div{border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;background:var(--surface)}
+.kpi small{display:block;color:var(--muted);font-size:13px;font-weight:600}
+.steps{margin:6px 0 0;padding-left:22px}
+.steps li{margin:4px 0}
+.say3{display:grid;gap:10px;margin:10px 0}
+.sw{display:flex;gap:10px;align-items:center;border:2px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--surface)}
+.sw.used{background:var(--good)}
+.sw .t{flex:1}
+.sw .t b{font-size:22px}
+.timer{font-size:36px;font-weight:800;font-variant-numeric:tabular-nums;min-width:90px}
+
+@media (max-width:560px){
+  body{font-size:17px}
+  .tab{font-size:11px} .tab .ic{font-size:20px}
+  .grid2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){ .btn:active{transform:none} }
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>Level Up <em>A2 → B2</em></h1>
+  <div class="stats"><div class="pill" id="pKnown">Known 0</div><div class="pill" id="pScore">✓ 0</div></div>
+</div>
+<div class="wrap">
+  <div class="tabs" role="tablist" id="tabs" aria-label="Activities"></div>
+  <main id="view" aria-live="polite"></main>
+</div>
+
+<script>
+/* ============ helpers ============ */
+var $=function(s){ return document.querySelector(s); };
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function rnd(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+function pick(a){ return a[rnd(0,a.length-1)]; }
+var canSpeak=('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window);
+function say(t){ try{ if(!canSpeak) return; window.speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(t); u.lang='en-GB'; u.rate=0.9; window.speechSynthesis.speak(u);}catch(e){} }
+function esc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function re(w){ return new RegExp('\\b'+esc(w)+'\\b','i'); }
+function hl(ex,w){ return ex.replace(re(w),function(m){ return '<mark>'+m+'</mark>'; }); }
+function hasW(x){ return re(x.w).test(x.ex); }
+var score=0; function addScore(){ score++; $('#pScore').textContent='✓ '+score; }
+
+/* ============ data ============ */
+var RAW=[
+['Daily life & habits','🏠',`routine|n|/ruːˈtiːn/|розпорядок дня|My morning routine takes about an hour.|B1
+chore|n|/tʃɔː/|хатня робота|Washing the dishes is my least favourite chore.|B1
+tidy|v/adj|/ˈtaɪdi/|прибирати; охайний|Please tidy your room before dinner.|A2
+neighbour|n|/ˈneɪbə/|сусід|Our neighbour is very friendly.|A2
+schedule|n|/ˈʃedjuːl/|графік, розклад|I have a very busy schedule today.|B1
+household|adj|/ˈhaʊshəʊld/|домашній, побутовий|We share all household chores equally.|B2
+appliance|n|/əˈplaɪəns/|побутовий прилад|A washing machine is a useful appliance.|B2
+laundry|n|/ˈlɔːndri/|прання, білизна|I do the laundry every Sunday.|B1
+mess|n|/mes/|безлад|What a mess! Who left this here?|B1
+commute|v/n|/kəˈmjuːt/|щодня їздити на роботу|I commute to work by train every day.|B2
+habit|n|/ˈhæbɪt/|звичка|Reading before bed is a good habit.|B1
+oversleep|v|/ˌəʊvəˈsliːp/|проспати|If I oversleep, I miss the bus.|B2
+errand|n|/ˈerənd/|дрібне доручення|I have a few errands to run after work.|B2
+rent|n/v|/rent/|оренда; орендувати|We pay the rent on the first of the month.|B1
+furniture|n|/ˈfɜːnɪtʃə/|меблі|We need some new furniture for the living room.|B1
+cosy|adj|/ˈkəʊzi/|затишний|The flat is small, but it is really cosy.|B2
+leftovers|n|/ˈleftəʊvəz/|залишки їжі|We ate the leftovers for lunch.|B2
+get used to|phr|/ɡet juːst tuː/|звикати до|It took me a month to get used to the noise.|B2
+spare time|n|/speə taɪm/|вільний час|What do you do in your spare time?|B1
+cope with|phr|/kəʊp wɪð/|впоратися з|How do you cope with stress?|B2`],
+['Feelings & personality','😊',`anxious|adj|/ˈæŋkʃəs/|тривожний|I always feel anxious before an exam.|B2
+proud|adj|/praʊd/|гордий|My parents are proud of me.|B1
+jealous|adj|/ˈdʒeləs/|заздрісний, ревнивий|She was jealous of her sister's success.|B1
+embarrassed|adj|/ɪmˈbærəst/|збентежений|I was so embarrassed when I forgot his name.|B2
+delighted|adj|/dɪˈlaɪtɪd/|в захваті, дуже радий|We were delighted to hear the good news.|B2
+disappointed|adj|/ˌdɪsəˈpɔɪntɪd/|розчарований|He was disappointed with his results.|B1
+relieved|adj|/rɪˈliːvd/|з полегшенням|I felt relieved when the test was over.|B2
+confident|adj|/ˈkɒnfɪdənt/|впевнений|She is confident that she will pass.|B1
+shy|adj|/ʃaɪ/|сором'язливий|He is shy and rarely speaks in class.|A2
+generous|adj|/ˈdʒenərəs/|щедрий|My uncle is generous; he always pays for dinner.|B1
+reliable|adj|/rɪˈlaɪəbl/|надійний|You can trust him. He is very reliable.|B1
+stubborn|adj|/ˈstʌbən/|впертий|My brother is too stubborn to change his mind.|B2
+curious|adj|/ˈkjʊəriəs/|допитливий|Children are naturally curious.|B1
+polite|adj|/pəˈlaɪt/|ввічливий|It is polite to say thank you.|A2
+lazy|adj|/ˈleɪzi/|лінивий|I felt lazy and stayed in bed all day.|A2
+cheerful|adj|/ˈtʃɪəfl/|життєрадісний|She is always cheerful in the morning.|B1
+moody|adj|/ˈmuːdi/|з мінливим настроєм|Teenagers can be moody.|B2
+patient|adj|/ˈpeɪʃnt/|терплячий|A good teacher must be patient.|B1
+mature|adj|/məˈtʃʊə/|зрілий|She is very mature for her age.|B2
+sensitive|adj|/ˈsensətɪv/|чутливий|He is sensitive and gets upset easily.|B2`],
+['Work & career','💼',`employee|n|/ɪmˈplɔɪiː/|працівник|The company has over two hundred employees.|B1
+employer|n|/ɪmˈplɔɪə/|роботодавець|My employer offers free English lessons.|B2
+salary|n|/ˈsæləri/|зарплата|She gets a good salary.|B1
+colleague|n|/ˈkɒliːɡ/|колега|My colleague helped me with the report.|B1
+deadline|n|/ˈdedlaɪn/|крайній термін|The deadline for the project is Friday.|B1
+meeting|n|/ˈmiːtɪŋ/|зустріч, нарада|We have a meeting at ten o'clock.|A2
+apply for|phr|/əˈplaɪ fɔː/|подавати заявку на|I want to apply for a new job.|B1
+resign|v|/rɪˈzaɪn/|звільнитися (за власним бажанням)|He decided to resign and start his own business.|B2
+promote|v|/prəˈməʊt/|підвищувати на посаді|They want to promote her to manager.|B2
+experience|n|/ɪkˈspɪəriəns/|досвід|I have five years of teaching experience.|B1
+skill|n|/skɪl/|навичка|Communication is an important skill.|A2
+qualification|n|/ˌkwɒlɪfɪˈkeɪʃn/|кваліфікація|You need a qualification to teach.|B2
+freelance|adj|/ˈfriːlɑːns/|фрілансовий|She works as a freelance designer.|B2
+workload|n|/ˈwɜːkləʊd/|обсяг роботи|My workload is heavy this month.|B2
+retire|v|/rɪˈtaɪə/|виходити на пенсію|My father will retire next year.|B2
+overtime|n|/ˈəʊvətaɪm/|понаднормова робота|I worked overtime three days this week.|B2
+boss|n|/bɒs/|начальник|My boss is very fair.|A2
+negotiate|v|/nɪˈɡəʊʃieɪt/|вести переговори|We need to negotiate the price.|B2
+internship|n|/ˈɪntɜːnʃɪp/|стажування|He did an internship at a bank.|B2
+manage|v|/ˈmænɪdʒ/|впоратися, керувати|Can you manage this project on your own?|B1`],
+['Travel & transport','✈️',`journey|n|/ˈdʒɜːni/|подорож, поїздка|The journey to the airport took two hours.|B1
+luggage|n|/ˈlʌɡɪdʒ/|багаж|My luggage was very heavy.|B1
+passport|n|/ˈpɑːspɔːt/|паспорт|Don't forget your passport.|A2
+delay|n/v|/dɪˈleɪ/|затримка|There was a delay because of the fog.|B1
+flight|n|/flaɪt/|авіарейс|Our flight leaves at seven.|A2
+board|v|/bɔːd/|сідати (на рейс)|Passengers can board the plane now.|B2
+accommodation|n|/əˌkɒməˈdeɪʃn/|житло (на час поїздки)|We found cheap accommodation near the beach.|B2
+sightseeing|n|/ˈsaɪtsiːɪŋ/|огляд пам'яток|We spent two days sightseeing in Rome.|B1
+itinerary|n|/aɪˈtɪnərəri/|маршрут, план подорожі|Our itinerary includes three cities.|B2
+book|v|/bʊk/|бронювати|I want to book a hotel for two nights.|A2
+cancel|v|/ˈkænsl/|скасовувати|They had to cancel the trip.|B1
+tourist|n|/ˈtʊərɪst/|турист|Many tourists visit the old town.|A2
+customs|n|/ˈkʌstəmz/|митниця|We went through customs quickly.|B2
+souvenir|n|/ˌsuːvəˈnɪə/|сувенір|I bought a small souvenir for my mother.|B1
+abroad|adv|/əˈbrɔːd/|за кордоном|She studied abroad for a year.|B1
+destination|n|/ˌdestɪˈneɪʃn/|пункт призначення|Paris is a popular tourist destination.|B2
+pick up|phr|/pɪk ʌp/|забрати, підібрати|Can you pick up the tickets?|B1
+fare|n|/feə/|вартість проїзду|The bus fare is two dollars.|B2
+get lost|phr|/ɡet lɒst/|заблукати|Don't get lost in the forest!|A2
+check in|phr|/tʃek ɪn/|реєструватися|We need to check in two hours before the flight.|B1`],
+['Health & body','🩺',`headache|n|/ˈhedeɪk/|головний біль|I have a terrible headache.|A2
+injury|n|/ˈɪndʒəri/|травма|He missed the game because of an injury.|B2
+symptom|n|/ˈsɪmptəm/|симптом|A cough is a symptom of a cold.|B2
+prescription|n|/prɪˈskrɪpʃn/|рецепт (від лікаря)|The doctor gave me a prescription.|B2
+recover|v|/rɪˈkʌvə/|одужувати|It takes time to recover from the flu.|B2
+appointment|n|/əˈpɔɪntmənt/|запис на прийом|I have an appointment with the dentist.|B1
+cough|n/v|/kɒf/|кашель; кашляти|I have a bad cough.|A2
+allergic|adj|/əˈlɜːdʒɪk/|алергічний|She is allergic to nuts.|B2
+exhausted|adj|/ɪɡˈzɔːstɪd/|виснажений|I was exhausted after the long trip.|B2
+stress|n|/stres/|стрес|Too much stress is bad for your health.|B1
+healthy|adj|/ˈhelθi/|здоровий, корисний|Eating vegetables is healthy.|A2
+diet|n|/ˈdaɪət/|дієта, раціон|He is on a diet.|B1
+muscle|n|/ˈmʌsl/|м'яз|I pulled a muscle in my back.|B2
+sore|adj|/sɔː/|болючий|I have a sore throat.|B2
+vaccine|n|/ˈvæksiːn/|вакцина|The vaccine protects you from the virus.|B2
+insomnia|n|/ɪnˈsɒmniə/|безсоння|He suffers from insomnia.|B2
+treatment|n|/ˈtriːtmənt/|лікування|The treatment lasted two weeks.|B2
+painkiller|n|/ˈpeɪnkɪlə/|знеболювальне|Take a painkiller if it hurts.|B2
+sprain|v|/spreɪn/|розтягнути (зв'язки)|Be careful not to sprain your ankle.|B2
+fit|adj|/fɪt/|у хорошій формі|She goes to the gym to stay fit.|B1`],
+['Food & cooking','🍳',`recipe|n|/ˈresəpi/|рецепт (страви)|This recipe is easy to follow.|A2
+ingredient|n|/ɪnˈɡriːdiənt/|інгредієнт|Fresh ingredients make the dish better.|B1
+chop|v|/tʃɒp/|нарізати, рубати|Chop the onions into small pieces.|B2
+boil|v|/bɔɪl/|варити, кип'ятити|Boil the eggs for ten minutes.|B1
+fry|v|/fraɪ/|смажити|Fry the fish for five minutes.|B1
+bake|v|/beɪk/|пекти (в духовці)|I like to bake bread at home.|B1
+stir|v|/stɜː/|помішувати|Stir the soup so it doesn't burn.|B2
+spicy|adj|/ˈspaɪsi/|гострий (на смак)|I can't eat spicy food.|B1
+sour|adj|/ˈsaʊə/|кислий|This lemon is very sour.|B2
+tasty|adj|/ˈteɪsti/|смачний|The soup was really tasty.|A2
+vegetarian|n/adj|/ˌvedʒəˈteəriən/|вегетаріанець|My sister is a vegetarian.|B1
+portion|n|/ˈpɔːʃn/|порція|The portions in this restaurant are huge.|B1
+snack|n|/snæk/|перекус|I always have a snack at four o'clock.|A2
+raw|adj|/rɔː/|сирий|Don't eat raw meat.|B2
+fresh|adj|/freʃ/|свіжий|The bread is fresh.|A2
+starving|adj|/ˈstɑːvɪŋ/|вмираю з голоду|I'm starving! When is dinner?|B2
+flavour|n|/ˈfleɪvə/|смак, присмак|I love the flavour of fresh basil.|B2
+homemade|adj|/ˌhəʊmˈmeɪd/|домашнього приготування|Her homemade cake was delicious.|B1
+groceries|n|/ˈɡrəʊsəriz/|продукти (покупки)|I buy groceries on Saturdays.|B1
+order|v|/ˈɔːdə/|замовляти|Are you ready to order?|A2`],
+['Technology & media','📱',`device|n|/dɪˈvaɪs/|пристрій|I use this device for work.|B1
+download|v|/ˌdaʊnˈləʊd/|завантажувати|Download the app for free.|B1
+upload|v|/ˌʌpˈləʊd/|завантажувати на сайт|I upload videos to my channel.|B2
+password|n|/ˈpɑːswɜːd/|пароль|Don't share your password.|A2
+screen|n|/skriːn/|екран|The screen is too bright.|A2
+update|v/n|/ʌpˈdeɪt/|оновлювати; оновлення|Please update your phone.|B1
+battery|n|/ˈbætəri/|батарея|My phone battery is almost dead.|B1
+charge|v|/tʃɑːdʒ/|заряджати|I need to charge my laptop.|B1
+browse|v|/braʊz/|переглядати (в інтернеті)|I like to browse the internet before bed.|B2
+stream|v|/striːm/|дивитися онлайн|We stream movies every weekend.|B2
+headline|n|/ˈhedlaɪn/|заголовок|The headline caught my attention.|B2
+fake|adj|/feɪk/|фальшивий|Be careful, this news is fake.|B2
+online|adj/adv|/ˌɒnˈlaɪn/|онлайн|She has online classes on Monday.|A2
+social media|n|/ˌsəʊʃl ˈmiːdiə/|соціальні мережі|I spend too much time on social media.|B1
+notification|n|/ˌnəʊtɪfɪˈkeɪʃn/|сповіщення|I turned off all notifications.|B2
+delete|v|/dɪˈliːt/|видаляти|Delete the old files.|B1
+save|v|/seɪv/|зберігати|Don't forget to save your work.|A2
+connection|n|/kəˈnekʃn/|з'єднання, зв'язок|The internet connection is slow today.|B1
+privacy|n|/ˈprɪvəsi/|приватність|Privacy is important online.|B2
+gadget|n|/ˈɡædʒɪt/|гаджет|He loves new gadgets.|B2`],
+['Education & learning','🎓',`subject|n|/ˈsʌbdʒɪkt/|предмет, тема|My favourite subject is history.|A2
+improve|v|/ɪmˈpruːv/|покращувати|I want to improve my vocabulary.|B1
+revise|v|/rɪˈvaɪz/|повторювати матеріал|I need to revise for the test.|B2
+assignment|n|/əˈsaɪnmənt/|завдання|Our assignment is due on Monday.|B2
+essay|n|/ˈeseɪ/|есе, твір|She wrote an essay about climate change.|B1
+exam|n|/ɪɡˈzæm/|іспит|I have an exam tomorrow.|A2
+pass|v|/pɑːs/|скласти (іспит)|Did you pass the exam?|A2
+fail|v|/feɪl/|не скласти, провалити|He was afraid he would fail.|A2
+graduate|v|/ˈɡrædʒueɪt/|закінчити університет|She will graduate in June.|B2
+degree|n|/dɪˈɡriː/|ступінь, диплом|He has a degree in economics.|B2
+lecture|n|/ˈlektʃə/|лекція|The lecture lasted two hours.|B1
+research|n|/rɪˈsɜːtʃ/|дослідження|Scientists do research in the lab.|B2
+memorise|v|/ˈmeməraɪz/|завчати, запам'ятовувати|I try to memorise ten new words a day.|B2
+attend|v|/əˈtend/|відвідувати|Students must attend all lectures.|B2
+scholarship|n|/ˈskɒləʃɪp/|стипендія|She won a scholarship to study abroad.|B2
+achieve|v|/əˈtʃiːv/|досягати|You can achieve your goals.|B1
+mistake|n|/mɪˈsteɪk/|помилка|Everyone makes mistakes.|A2
+explain|v|/ɪkˈspleɪn/|пояснювати|Can you explain this rule?|A2
+concentrate|v|/ˈkɒnsntreɪt/|зосереджуватися|It's hard to concentrate with this noise.|B1
+knowledge|n|/ˈnɒlɪdʒ/|знання|Knowledge is power.|B1`],
+['Environment & weather','🌍',`climate|n|/ˈklaɪmət/|клімат|The climate here is warm and dry.|B1
+pollution|n|/pəˈluːʃn/|забруднення|Air pollution is a problem in big cities.|B1
+recycle|v|/ˌriːˈsaɪkl/|переробляти (відходи)|We recycle paper and plastic.|B1
+waste|v/n|/weɪst/|марнувати; відходи|Don't waste water.|B1
+damage|n|/ˈdæmɪdʒ/|шкода, збитки|The storm caused a lot of damage.|B1
+protect|v|/prəˈtekt/|захищати|We must protect the environment.|B1
+shortage|n|/ˈʃɔːtɪdʒ/|нестача|There is a shortage of water.|B2
+flood|n|/flʌd/|повінь|The flood destroyed many houses.|B2
+drought|n|/draʊt/|посуха|The drought lasted three months.|B2
+forecast|n|/ˈfɔːkɑːst/|прогноз|The forecast says it will rain tomorrow.|B1
+breeze|n|/briːz/|легкий вітерець|A light breeze came from the sea.|B2
+humid|adj|/ˈhjuːmɪd/|вологий (про повітря)|It's hot and humid today.|B2
+chilly|adj|/ˈtʃɪli/|прохолодний|It's a bit chilly this evening.|B2
+storm|n|/stɔːm/|буря|A big storm is coming.|A2
+endangered|adj|/ɪnˈdeɪndʒəd/|під загрозою зникнення|The tiger is an endangered species.|B2
+renewable|adj|/rɪˈnjuːəbl/|відновлюваний|Solar power is a renewable energy.|B2
+landscape|n|/ˈlændskeɪp/|краєвид, ландшафт|The landscape is beautiful in autumn.|B2
+wildlife|n|/ˈwaɪldlaɪf/|дика природа|We watched wildlife in the national park.|B2
+sunrise|n|/ˈsʌnraɪz/|схід сонця|We got up early to see the sunrise.|B1
+global warming|n|/ˌɡləʊbl ˈwɔːmɪŋ/|глобальне потепління|Global warming is a serious problem.|B1`],
+['People & relationships','🤝',`relationship|n|/rɪˈleɪʃnʃɪp/|стосунки|They have a good relationship.|B1
+get along with|phr|/ɡet əˈlɒŋ wɪð/|ладнати з|I get along with all my colleagues.|B2
+argue|v|/ˈɑːɡjuː/|сперечатися, сваритися|My brother and I argue about everything.|B1
+apologise|v|/əˈpɒlədʒaɪz/|вибачатися|You should apologise to her.|B2
+trust|v/n|/trʌst/|довіряти; довіра|I trust my best friend.|B1
+support|v/n|/səˈpɔːt/|підтримувати; підтримка|My family will support me.|B1
+advice|n|/ədˈvaɪs/|порада|Can you give me some advice?|B1
+promise|v/n|/ˈprɒmɪs/|обіцяти; обіцянка|I promise to call you.|B1
+community|n|/kəˈmjuːnəti/|спільнота, громада|Our community helps people in need.|B2
+volunteer|n/v|/ˌvɒlənˈtɪə/|волонтер|She works as a volunteer at the hospital.|B2
+respect|n/v|/rɪˈspekt/|повага; поважати|Children should respect their teachers.|B1
+behaviour|n|/bɪˈheɪvjə/|поведінка|His behaviour was rude.|B2
+rely on|phr|/rɪˈlaɪ ɒn/|покладатися на|You can rely on me.|B2
+disagree|v|/ˌdɪsəˈɡriː/|не погоджуватися|I disagree with you.|B1
+opinion|n|/əˈpɪnjən/|думка|In my opinion, it's a good idea.|B1
+invite|v|/ɪnˈvaɪt/|запрошувати|I want to invite you to my party.|A2
+fair|adj|/feə/|справедливий|That's not fair!|B2
+social|adj|/ˈsəʊʃl/|соціальний, суспільний|Social networks are popular.|B1
+generation|n|/ˌdʒenəˈreɪʃn/|покоління|The younger generation uses phones a lot.|B2
+manners|n|/ˈmænəz/|манери, вихованість|He has good manners.|B2`],
+['Linking words & phrases','🔗',`however|adv|/haʊˈevə/|однак|I like the city. However, it is too noisy.|B1
+although|conj|/ɔːlˈðəʊ/|хоча|Although it was raining, we went for a walk.|B1
+despite|prep|/dɪˈspaɪt/|незважаючи на|Despite the rain, we went out.|B2
+therefore|adv|/ˈðeəfɔː/|тому, отже|I was tired. Therefore, I went to bed early.|B2
+instead|adv|/ɪnˈsted/|замість цього|I didn't go out. Instead, I stayed home.|B1
+in order to|phr|/ɪn ˈɔːdə tuː/|щоб, для того щоб|I study in order to get a better job.|B2
+as long as|phr|/æz lɒŋ æz/|за умови, що|You can go as long as you come back early.|B2
+whereas|conj|/weərˈæz/|тоді як|I like tea, whereas my husband prefers coffee.|B2
+actually|adv|/ˈæktʃuəli/|насправді|Actually, I don't agree with you.|B1
+anyway|adv|/ˈeniweɪ/|у будь-якому разі|Anyway, let's go back to the topic.|B1
+apparently|adv|/əˈpærəntli/|мабуть, як виявляється|Apparently, the shop is closed today.|B2
+basically|adv|/ˈbeɪsɪkli/|по суті, в основному|Basically, it's a very simple idea.|B2
+on the other hand|phr|/ɒn ði ˈʌðə hænd/|з іншого боку|It's cheap. On the other hand, it's not very good.|B2
+in fact|phr|/ɪn fækt/|насправді, фактично|He is not rude. In fact, he is very polite.|B1
+as a result|phr|/æz ə rɪˈzʌlt/|в результаті|He didn't study. As a result, he failed.|B2
+by the way|phr|/baɪ ðə weɪ/|до речі|By the way, did you call him?|B1
+for example|phr|/fər ɪɡˈzɑːmpl/|наприклад|I love sports, for example, tennis.|A2
+in addition|phr|/ɪn əˈdɪʃn/|крім того|In addition, we need more time.|B2
+unless|conj|/ənˈles/|якщо не|Don't go unless you feel well.|B2
+meanwhile|adv|/ˈmiːnwaɪl/|тим часом|Meanwhile, I was waiting outside.|B2`]
+];
+var W=[]; RAW.forEach(function(t,ti){ t[2].trim().split('\n').forEach(function(l){ var p=l.split('|'); if(p.length<6) return; W.push({w:p[0].trim(),pos:p[1],ipa:p[2],uk:p[3],ex:p[4],lv:p[5].trim(),th:ti}); }); });
+
+/* ============ progress (box 0..3, saved in browser if possible) ============ */
+var prog={}, KEY='levelup.a2b2.v1';
+try{ var sv=window.localStorage.getItem(KEY); if(sv) prog=JSON.parse(sv)||{}; }catch(e){ prog={}; }
+function saveP(){ try{ window.localStorage.setItem(KEY,JSON.stringify(prog)); }catch(e){} }
+function box(w){ return prog[w]||0; }
+function setBox(w,n){ prog[w]=Math.max(0,Math.min(3,n)); saveP(); upStats(); }
+function upStats(){ var k=W.filter(function(x){return box(x.w)>=3;}).length; $('#pKnown').textContent='Known '+k+' / '+W.length; }
+
+/* ============ scope ============ */
+var flt={topic:-1,level:'All',custom:null};
+function scopeList(){ return W.filter(function(x){ return (flt.topic<0||x.th===flt.topic)&&(flt.level==='All'||x.lv===flt.level); }); }
+function pool(){ return flt.custom||scopeList(); }
+function scopeHTML(){
+  var h='<div class="scope"><select id="sTopic" aria-label="Topic"><option value="-1">All topics ('+W.length+')</option>'+RAW.map(function(t,i){ return '<option value="'+i+'"'+(flt.topic===i?' selected':'')+'>'+t[1]+' '+t[0]+'</option>'; }).join('')+'</select>'+
+   ['All','A2','B1','B2'].map(function(l){ return '<button class="chip" data-lv="'+l+'" aria-pressed="'+(flt.level===l)+'">'+l+'</button>'; }).join('')+
+   (flt.custom?'<button class="chip today" id="sClr">Today\'s '+flt.custom.length+' ✕</button>':'<button class="chip today" id="sToday">⭐ Today\'s 10</button>')+'</div>';
+  return h;
+}
+function bindScope(redo){
+  var t=$('#sTopic'); if(t) t.onchange=function(){ flt.topic=parseInt(this.value,10); flt.custom=null; redo(); };
+  var ls=document.querySelectorAll('[data-lv]'); for(var i=0;i<ls.length;i++) ls[i].onclick=function(){ flt.level=this.getAttribute('data-lv'); flt.custom=null; redo(); };
+  var td=$('#sToday'); if(td) td.onclick=function(){ var l=shuffle(scopeList().filter(function(x){return box(x.w)<3;})); if(!l.length) l=shuffle(scopeList()); flt.custom=l.slice(0,10); redo(); };
+  var cl=$('#sClr'); if(cl) cl.onclick=function(){ flt.custom=null; redo(); };
+}
+function distract(x,n,field){
+  var same=W.filter(function(y){ return y.w!==x.w&&y.pos===x.pos; }), all=W.filter(function(y){ return y.w!==x.w; });
+  var out=shuffle(same).slice(0,n); if(out.length<n) out=out.concat(shuffle(all).filter(function(y){ return out.indexOf(y)<0; }).slice(0,n-out.length));
+  return out;
+}
+
+/* ============ tabs ============ */
+var TABS=[['home','📊','Home'],['learn','🃏','Learn'],['mean','❓','Meaning'],['use','✍️','Use it'],['spell','⌨️','Spell'],['say','🎤','Say it']];
+var tab='home', tmr=null;
+function stopTmr(){ if(tmr){ clearInterval(tmr); tmr=null; } }
+var START={home:function(){ renderHome(); },learn:function(){ startLearn(); },mean:function(){ startMean(); },use:function(){ startUse(); },spell:function(){ startSpell(); },say:function(){ startSay(); }};
+function drawTabs(){ $('#tabs').innerHTML=TABS.map(function(t){ return '<button class="tab" role="tab" data-t="'+t[0]+'" aria-selected="'+(tab===t[0])+'"><span class="ic">'+t[1]+'</span>'+t[2]+'</button>'; }).join(''); }
+function setTab(t){ tab=t; stopTmr(); try{ if(canSpeak) window.speechSynthesis.cancel(); }catch(e){} drawTabs(); START[t](); window.scrollTo(0,0); }
+$('#tabs').addEventListener('click',function(e){ var b=e.target.closest('.tab'); if(b) setTab(b.getAttribute('data-t')); });
+
+/* ============ HOME ============ */
+var resetArm=false;
+function renderHome(){
+  var kn=W.filter(function(x){return box(x.w)>=3;}).length, lr=W.filter(function(x){var b=box(x.w);return b>=1&&b<3;}).length, nw=W.length-kn-lr;
+  var h='<div class="card"><h2>Your vocabulary gym</h2><p class="hint">'+W.length+' words from A2 to B2 in '+RAW.length+' topics. Every word has a transcription, translation and an example sentence.</p>'+
+   '<div class="kpi"><div><span class="big">'+kn+'</span><small>known</small></div><div><span class="big">'+lr+'</span><small>learning</small></div><div><span class="big">'+nw+'</span><small>new</small></div></div>'+
+   '<div class="bar" aria-hidden="true"><i style="width:'+Math.round(kn/W.length*100)+'%"></i></div>'+
+   '<div class="row" style="margin-top:14px"><button class="btn main" id="goLearn">Start learning</button><button class="btn lime" id="goToday">⭐ Today\'s 10 words</button></div>'+
+   '<h3>How it works</h3><ol class="steps"><li><b>Learn:</b> flip cards, listen, read the example. Press «I know it» or «Again».</li><li><b>Meaning, Use it, Spell:</b> three quizzes. A correct answer moves a word up. A mistake sends it back to the start.</li><li><b>Say it:</b> use three words in your own sentences. This is how words become <i>yours</i>.</li><li>A word is <b>known</b> after 3 correct steps. Your progress is saved in this browser.</li></ol>'+
+   '<h3>By topic</h3><div class="grid2">'+RAW.map(function(t,i){ var ws=W.filter(function(x){return x.th===i;}), k=ws.filter(function(x){return box(x.w)>=3;}).length;
+      return '<div class="th"><b>'+t[1]+' '+t[0]+'</b><small>'+k+' / '+ws.length+' known</small><div class="bar" aria-hidden="true"><i style="width:'+Math.round(k/ws.length*100)+'%"></i></div></div>'; }).join('')+'</div>'+
+   '<h3>By level</h3><div class="row">'+['A2','B1','B2'].map(function(l){ var ws=W.filter(function(x){return x.lv===l;}), k=ws.filter(function(x){return box(x.w)>=3;}).length; return '<span class="badge '+l+'">'+l+'</span><span class="hint">'+k+' / '+ws.length+'</span>'; }).join(' ')+'</div>'+
+   '<div class="row" style="margin-top:16px"><button class="btn" id="rst">'+(resetArm?'Click again to confirm reset':'Reset my progress')+'</button></div></div>';
+  $('#view').innerHTML=h;
+  $('#goLearn').onclick=function(){ setTab('learn'); };
+  $('#goToday').onclick=function(){ var l=shuffle(W.filter(function(x){return box(x.w)<3;})); flt={topic:-1,level:'All',custom:l.slice(0,10)}; setTab('learn'); };
+  $('#rst').onclick=function(){ if(!resetArm){ resetArm=true; renderHome(); } else { prog={}; saveP(); upStats(); resetArm=false; renderHome(); } };
+}
+
+/* ============ LEARN ============ */
+var ln={deck:[],all:0,shown:false,review:false};
+function startLearn(){ buildLearn(false); renderLearn(); }
+function buildLearn(review){ var p=pool(); var d=review?p:p.filter(function(x){return box(x.w)<3;}); ln={deck:shuffle(d),all:p.length,shown:false,review:review}; }
+function renderLearn(){
+  var h='<div class="card"><h2>Learn</h2>'+scopeHTML();
+  if(!ln.deck.length){
+    h+='<h2>All learned here! 🎉</h2><p>Every word in this set is marked as known. Change the topic or review them again.</p><div class="row"><button class="btn main" id="rv">Review again</button></div></div>';
+    $('#view').innerHTML=h; bindScope(startLearn); $('#rv').onclick=function(){ buildLearn(true); renderLearn(); }; return;
+  }
+  var x=ln.deck[0], done=ln.all-ln.deck.length;
+  h+='<div class="bar" aria-hidden="true"><i style="width:'+Math.round(done/ln.all*100)+'%"></i></div><div class="fc"><span class="badge '+x.lv+'">'+x.lv+'</span> <span class="pos">'+x.pos+'</span><p class="w">'+x.w+'</p><p class="i ipa">'+x.ipa+'</p>'+
+   (canSpeak?'<button class="btn lime" id="ls">🔊 Listen</button> ':'')+'<button class="btn" id="sh">'+(ln.shown?'Hide meaning':'Show meaning')+'</button>'+
+   '<div class="rev">'+(ln.shown?'<p class="uk">'+x.uk+'</p><p class="ex">'+hl(x.ex,x.w)+'</p>'+(canSpeak?'<button class="btn" id="lx" style="margin-top:8px">🔊 Sentence</button>':''):'')+'</div>'+
+   '<div class="row" style="justify-content:center;margin-top:6px"><button class="btn" id="ag">Again later</button><button class="btn main" id="kn">I know it</button></div>'+
+   '<p class="hint" style="margin-top:10px">'+RAW[x.th][1]+' '+RAW[x.th][0]+' | '+ln.deck.length+' left in this set. Say the word aloud first!</p></div></div>';
+  $('#view').innerHTML=h; bindScope(startLearn);
+  if(canSpeak){ $('#ls').onclick=function(){ say(x.w); }; if($('#lx')) $('#lx').onclick=function(){ say(x.ex); }; }
+  $('#sh').onclick=function(){ ln.shown=!ln.shown; renderLearn(); };
+  $('#ag').onclick=function(){ setBox(x.w,0); ln.deck.push(ln.deck.shift()); ln.shown=false; renderLearn(); };
+  $('#kn').onclick=function(){ setBox(x.w,Math.max(box(x.w),0)+1); ln.deck.shift(); ln.shown=false; renderLearn(); };
+}
+
+/* ============ MEANING quiz ============ */
+var mq={dir:'en',list:[],i:0,score:0,picked:-1,opts:[],done:false};
+function startMean(){ newMean(); }
+function newMean(){
+  var p=pool(); var low=shuffle(p).sort(function(a,b){ return box(a.w)-box(b.w); }).slice(0,Math.min(10,p.length));
+  mq.list=shuffle(low); mq.i=0; mq.score=0; mq.picked=-1; mq.done=false; prepMean(); renderMean();
+}
+function prepMean(){
+  if(mq.i>=mq.list.length) return; var x=mq.list[mq.i];
+  var d=distract(x,3); mq.opts=shuffle([x].concat(d)); mq.picked=-1;
+}
+function renderMean(){
+  var h='<div class="card"><h2>Meaning</h2>'+scopeHTML()+'<div class="row" style="margin-bottom:12px"><button class="chip" data-d="en" aria-pressed="'+(mq.dir==='en')+'">English → Ukrainian</button><button class="chip" data-d="uk" aria-pressed="'+(mq.dir==='uk')+'">Ukrainian → English</button></div>';
+  if(!mq.list.length){ h+='<p>No words in this set.</p></div>'; $('#view').innerHTML=h; bindScope(startMean); return; }
+  if(mq.done||mq.i>=mq.list.length){
+    h+='<h2>'+mq.score+' out of '+mq.list.length+'</h2><p>'+(mq.score>=8?'Excellent!':'Good work. The words you missed will come back soon.')+'</p><div class="row"><button class="btn main" id="ag">New round</button></div></div>';
+    $('#view').innerHTML=h; bindScope(startMean); bindDir(); $('#ag').onclick=newMean; return;
+  }
+  var x=mq.list[mq.i], an=mq.picked>-1;
+  h+='<p class="hint">Question '+(mq.i+1)+' of '+mq.list.length+' | Score '+mq.score+'</p><div class="q">'+(mq.dir==='en'?x.w+' <span class="ipa" style="font-weight:400;font-size:.7em;color:var(--muted)">'+x.ipa+'</span>':x.uk)+'</div>'+(canSpeak&&mq.dir==='en'?'<button class="btn lime" id="ls" style="margin-bottom:12px">🔊 Listen</button>':'')+
+   '<div class="opts">'+mq.opts.map(function(o,k){ var cls='opt',mk=''; if(an){ if(o===x){ cls+=' good'; mk='✓ '; } else if(k===mq.picked){ cls+=' bad'; mk='✗ '; } } return '<button class="'+cls+'" data-k="'+k+'"'+(an?' disabled':'')+'>'+mk+(mq.dir==='en'?o.uk:o.w)+'</button>'; }).join('')+'</div>';
+  if(an){ var ok=mq.opts[mq.picked]===x; h+='<div class="fb'+(ok?'':' no')+'"><b>'+(ok?'Correct!':'Not quite.')+'</b>'+x.w+' = '+x.uk+'<br>'+hl(x.ex,x.w)+'</div><div class="row" style="margin-top:12px"><button class="btn main" id="nx">'+(mq.i===mq.list.length-1?'See result':'Next')+'</button></div>'; }
+  h+='</div>'; $('#view').innerHTML=h; bindScope(startMean); bindDir();
+  if(canSpeak&&$('#ls')) $('#ls').onclick=function(){ say(x.w); };
+  var os=document.querySelectorAll('.opt'); for(var i=0;i<os.length;i++) os[i].onclick=function(){
+    if(mq.picked>-1) return; mq.picked=parseInt(this.getAttribute('data-k'),10);
+    if(mq.opts[mq.picked]===x){ mq.score++; addScore(); setBox(x.w,box(x.w)+1); } else setBox(x.w,0);
+    if(canSpeak) say(x.w); renderMean(); var n=$('#nx'); if(n) n.focus();
+  };
+  if($('#nx')) $('#nx').onclick=function(){ mq.i++; if(mq.i>=mq.list.length) mq.done=true; else prepMean(); renderMean(); };
+}
+function bindDir(){ var ds=document.querySelectorAll('[data-d]'); for(var i=0;i<ds.length;i++) ds[i].onclick=function(){ mq.dir=this.getAttribute('data-d'); mq.i=0; mq.score=0; mq.done=false; prepMean(); renderMean(); }; }
+
+/* ============ USE IT (gap fill) ============ */
+var us={list:[],i:0,score:0,picked:-1,opts:[],done:false};
+function startUse(){ newUse(); }
+function newUse(){
+  var p=pool().filter(hasW); var low=shuffle(p).sort(function(a,b){ return box(a.w)-box(b.w); }).slice(0,Math.min(10,p.length));
+  us={list:shuffle(low),i:0,score:0,picked:-1,opts:[],done:false}; prepUse(); renderUse();
+}
+function prepUse(){ if(us.i>=us.list.length) return; var x=us.list[us.i]; us.opts=shuffle([x].concat(distract(x,3))); us.picked=-1; }
+function renderUse(){
+  var h='<div class="card"><h2>Use it</h2><p class="hint">Choose the word that fits the sentence. Context is how you learn to <i>use</i> words.</p><div style="height:10px"></div>'+scopeHTML();
+  if(!us.list.length){ h+='<p>No words in this set.</p></div>'; $('#view').innerHTML=h; bindScope(startUse); return; }
+  if(us.done||us.i>=us.list.length){
+    h+='<h2>'+us.score+' out of '+us.list.length+'</h2><p>'+(us.score>=8?'Excellent!':'Good work. Read the sentences once more aloud.')+'</p><div class="row"><button class="btn main" id="ag">New round</button></div></div>';
+    $('#view').innerHTML=h; bindScope(startUse); $('#ag').onclick=newUse; return;
+  }
+  var x=us.list[us.i], an=us.picked>-1;
+  var sent=x.ex.replace(re(x.w),an?'<mark>'+x.w+'</mark>':'<span class="blank">&nbsp;</span>');
+  h+='<p class="hint">Question '+(us.i+1)+' of '+us.list.length+' | Score '+us.score+'</p><div class="sent">'+sent+'</div><p class="hint" style="margin-bottom:10px">Hint: '+x.uk+'</p><div class="opts">'+
+   us.opts.map(function(o,k){ var cls='opt',mk=''; if(an){ if(o===x){ cls+=' good'; mk='✓ '; } else if(k===us.picked){ cls+=' bad'; mk='✗ '; } } return '<button class="'+cls+'" data-k="'+k+'"'+(an?' disabled':'')+'>'+mk+o.w+'</button>'; }).join('')+'</div>';
+  if(an){ var ok=us.opts[us.picked]===x; h+='<div class="fb'+(ok?'':' no')+'"><b>'+(ok?'Correct!':'The answer is "'+x.w+'".')+'</b><span class="ipa">'+x.ipa+'</span> '+x.uk+'</div><div class="row" style="margin-top:12px">'+(canSpeak?'<button class="btn lime" id="ls">🔊 Sentence</button>':'')+'<button class="btn main" id="nx">'+(us.i===us.list.length-1?'See result':'Next')+'</button></div>'; }
+  h+='</div>'; $('#view').innerHTML=h; bindScope(startUse);
+  if(canSpeak&&$('#ls')) $('#ls').onclick=function(){ say(x.ex); };
+  var os=document.querySelectorAll('.opt'); for(var i=0;i<os.length;i++) os[i].onclick=function(){
+    if(us.picked>-1) return; us.picked=parseInt(this.getAttribute('data-k'),10);
+    if(us.opts[us.picked]===x){ us.score++; addScore(); setBox(x.w,box(x.w)+1); } else setBox(x.w,0);
+    renderUse(); var n=$('#nx'); if(n) n.focus();
+  };
+  if($('#nx')) $('#nx').onclick=function(){ us.i++; if(us.i>=us.list.length) us.done=true; else prepUse(); renderUse(); };
+}
+
+/* ============ SPELL ============ */
+var sp={list:[],i:0,score:0,state:'',hint:false,done:false};
+function startSpell(){ newSpell(); }
+function newSpell(){
+  var p=pool(); var low=shuffle(p).sort(function(a,b){ return box(a.w)-box(b.w); }).slice(0,Math.min(8,p.length));
+  sp={list:shuffle(low),i:0,score:0,state:'',hint:false,done:false}; renderSpell(true);
+}
+function norm(s){ return s.toLowerCase().replace(/\s+/g,' ').trim(); }
+function renderSpell(speak){
+  var h='<div class="card"><h2>Spell</h2><p class="hint">Listen, then type the word. If sound is off, use the translation and the transcription.</p><div style="height:10px"></div>'+scopeHTML();
+  if(!sp.list.length){ h+='<p>No words in this set.</p></div>'; $('#view').innerHTML=h; bindScope(startSpell); return; }
+  if(sp.done||sp.i>=sp.list.length){
+    h+='<h2>'+sp.score+' out of '+sp.list.length+'</h2><p>'+(sp.score>=7?'Excellent spelling!':'Good work. Write the missed words by hand two times.')+'</p><div class="row"><button class="btn main" id="ag">New round</button></div></div>';
+    $('#view').innerHTML=h; bindScope(startSpell); $('#ag').onclick=newSpell; return;
+  }
+  var x=sp.list[sp.i];
+  var hintTxt=sp.hint?x.w.charAt(0)+x.w.slice(1).replace(/[^ ]/g,'_').split('').join(' ')+'  ('+x.w.length+' letters)':'';
+  h+='<p class="hint">Word '+(sp.i+1)+' of '+sp.list.length+' | Score '+sp.score+'</p><div class="fc"><span class="badge '+x.lv+'">'+x.lv+'</span> <span class="pos">'+x.pos+'</span><p class="uk">'+x.uk+'</p><p class="i ipa">'+x.ipa+'</p>'+
+   (canSpeak?'<button class="btn lime" id="ls">🔊 Listen</button> ':'')+'<button class="btn" id="hn">💡 Hint</button>'+(hintTxt?'<p class="q" style="margin:10px 0 0;letter-spacing:2px">'+hintTxt+'</p>':'')+'</div>'+
+   '<input class="inp'+(sp.state||'')+'" id="in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Type the word" placeholder="type here"'+(sp.state==='ok'||sp.state==='reveal'?' disabled':'')+'>';
+  if(sp.state==='ok') h+='<div class="fb"><b>Correct!</b>'+hl(x.ex,x.w)+'</div>';
+  if(sp.state==='no') h+='<div class="fb no"><b>Not quite.</b>Look at the hint and try once more.</div>';
+  if(sp.state==='reveal') h+='<div class="fb no"><b>The word is "'+x.w+'".</b>'+hl(x.ex,x.w)+'</div>';
+  h+='<div class="row" style="margin-top:12px">'+((sp.state==='ok'||sp.state==='reveal')?'<button class="btn main" id="nx">'+(sp.i===sp.list.length-1?'See result':'Next word')+'</button>':'<button class="btn main" id="ck">Check</button><button class="btn" id="rv">Show answer</button>')+'</div></div>';
+  $('#view').innerHTML=h; bindScope(startSpell);
+  var inp=$('#in'); if(inp&&!inp.disabled) inp.focus();
+  if(canSpeak&&$('#ls')) $('#ls').onclick=function(){ say(x.w); };
+  $('#hn').onclick=function(){ sp.hint=true; var v=inp.value; renderSpell(false); var i2=$('#in'); if(i2&&!i2.disabled){ i2.value=v; i2.focus(); } };
+  var tries=sp.tries||0;
+  if($('#ck')){ $('#ck').onclick=check; inp.onkeydown=function(e){ if(e.key==='Enter') check(); }; }
+  if($('#rv')) $('#rv').onclick=function(){ setBox(x.w,0); sp.state='reveal'; renderSpell(false); };
+  if($('#nx')) $('#nx').onclick=function(){ sp.i++; sp.state=''; sp.hint=false; sp.tries=0; if(sp.i>=sp.list.length) sp.done=true; renderSpell(true); };
+  function check(){
+    if(norm(inp.value)===norm(x.w)){ sp.state='ok'; sp.score++; addScore(); setBox(x.w,box(x.w)+1); if(canSpeak) say(x.w); }
+    else { sp.state='no'; sp.hint=true; setBox(x.w,0); }
+    renderSpell(false); var n=$('#nx'); if(n) n.focus(); else { var i3=$('#in'); if(i3) i3.focus(); }
+  }
+  if(speak&&canSpeak&&!sp.state) setTimeout(function(){ say(x.w); },250);
+}
+
+/* ============ SAY IT ============ */
+var sy={words:[],used:{},show:false,left:60,run:false};
+function startSay(){ newSay(); }
+function newSay(){
+  stopTmr(); var p=pool(); var low=shuffle(p).sort(function(a,b){ return box(a.w)-box(b.w); }).slice(0,Math.min(3,p.length));
+  sy={words:shuffle(low),used:{},show:false,left:60,run:false}; renderSay();
+}
+function renderSay(){
+  var h='<div class="card"><h2>Say it</h2><p class="hint">Make your <b>own</b> sentence with each word. Say it out loud. Then tick the word. Using a word yourself is the fastest way to remember it.</p><div style="height:10px"></div>'+scopeHTML();
+  if(!sy.words.length){ h+='<p>No words in this set.</p></div>'; $('#view').innerHTML=h; bindScope(startSay); return; }
+  h+='<div class="say3">'+sy.words.map(function(x,i){ var u=sy.used[i]; return '<div class="sw'+(u?' used':'')+'"><div class="t"><b>'+x.w+'</b> <span class="badge '+x.lv+'">'+x.lv+'</span> <span class="ipa hint">'+x.ipa+'</span><br><span class="hint">'+x.uk+'</span>'+(sy.show?'<br><span>'+hl(x.ex,x.w)+'</span>':'')+'</div><button class="btn'+(u?' main':'')+'" data-u="'+i+'" aria-pressed="'+(!!u)+'">'+(u?'✓ used':'I used it')+'</button></div>'; }).join('')+'</div>'+
+   '<div class="row"><div class="timer" id="tm" role="timer">'+(sy.left>=60?'1:00':'0:'+(sy.left<10?'0':'')+sy.left)+'</div><button class="btn lime" id="st">Start 60 sec</button><button class="btn" id="ex">'+(sy.show?'Hide examples':'💡 Show examples')+'</button></div>'+
+   '<p class="hint" style="margin:10px 0">Challenge: use all three words in one short story.</p><div class="row"><button class="btn main" id="nw">New 3 words</button></div></div>';
+  $('#view').innerHTML=h; bindScope(startSay);
+  var us2=document.querySelectorAll('[data-u]'); for(var i=0;i<us2.length;i++) us2[i].onclick=function(){
+    var k=parseInt(this.getAttribute('data-u'),10); if(sy.used[k]) { sy.used[k]=false; } else { sy.used[k]=true; setBox(sy.words[k].w,box(sy.words[k].w)+1); addScore(); } renderSay();
+  };
+  $('#ex').onclick=function(){ sy.show=!sy.show; renderSay(); };
+  $('#nw').onclick=newSay;
+  $('#st').onclick=function(){ stopTmr(); sy.left=60; var t=$('#tm'); t.textContent='1:00'; tmr=setInterval(function(){ sy.left--; var e=$('#tm'); if(e) e.textContent='0:'+(sy.left<10?'0':'')+sy.left; if(sy.left<=0){ stopTmr(); } },1000); };
+}
+
+upStats();
+setTab('home');
+</script>
+</body>
+</html>
